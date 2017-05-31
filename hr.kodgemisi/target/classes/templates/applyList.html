@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8"/>
+<title>Apply List</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"></link>
+	<link href="/css/index.css" rel="stylesheet"></link>
+	<link href="/css/login.css" rel="stylesheet"></link>
+    <script src="/script/jquery-3.2.1.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+        <style >
+    table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+table {
+    border-collapse: collapse;
+    width: 25%;
+}
+th, td {
+    padding: 15px;
+}
+    </style>
+    
+</head>
+
+<body style ="background: white;">
+<div>
+    <div class="container">
+        <div class="topFrame">
+
+                <!--Kod gemisi Logo-->
+                <div id="logoFrame">
+                    <img id="main-logo" class="image" th:src="@{/image/kodgemisi.png}"/>
+                </div>
+
+                <!--User Logo-->
+                <div id="logoFrame" class="dropdown" style="float: right;">
+                        <img id="user-logo" class="dropbtn image" th:src="@{/image/user.png}"/>   
+                        <span id="username">Hello User</span>                                                         
+                 <div id="myDropdown" class="dropdown-content">
+                    <a id="adminPage" style="display:none" href="#">Admin Page</a>             
+                    <a id="signOut"  style="display:none" href="#">Log Out</a>
+                    <a id="loginArea"  href="#">Log In</a>
+               	 </div>
+               	 </div>
+               </div>                             
+            </div>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/homepage">Home Page</a>
+                    </li>
+                </ul>
+            </div>
+   
+           <div style="width: 1200px">    
+            <div id="listJob" style="float:left; width: 300px;">
+       		
+				<div th:if="${(jobs.jobApplications).isEmpty()}" class="alert alert-danger" role="alert">
+					<strong>Warning! </strong>There is no people apply to job
+				</div>				
+				
+				<table th:each="jobApp : ${jobs.jobApplications}">				 
+				  <tr id="name">                   
+    				<td><span class="badge badge-pill badge-success">Name</span></td>
+    				<td th:text="${jobApp.name}"></td>
+  				</tr>
+  				
+ 				 <tr id="surname">
+    				<td><span class="badge badge-pill badge-success">Surname</span></td>
+    				<td th:text="${jobApp.surname}"></td>    				
+ 				</tr>
+  				<tr id="email">
+    				<td> <span class="badge badge-pill badge-success">E-Mail</span> </td>
+    				<td th:text="${jobApp.email}"></td>    				
+  				</tr>
+  				
+  				<tr id="phone">
+    				<td> <span class="badge badge-pill badge-success">Phone </span> </td>
+    				<td th:text="${jobApp.phone}"></td>   			  				
+    				    				
+  				</tr>
+  				
+  				<tr id="address">
+    				<td> <span class="badge badge-pill badge-success">Address </span> </td>
+    				<td th:text="${jobApp.address}"></td>   			  				
+    				    				
+  				</tr>
+  				
+  				<tr id="thoughts">
+    				<td> <span class="badge badge-pill badge-success">Thoughts </span> </td>
+    				<td th:text="${jobApp.thoughts}"></td>
+    				<td><a th:href="@{/admin/apply/{jobId}/{jobAppId}/delete(jobAppId=${jobApp.jobApplicationId},jobId=${jobs.jobId})}">
+    				<button id="deleteApplyId" class="btn btn-danger">Delete Apply</button></a></td>			  				    				    				
+  				</tr>
+  				
+  				<p></p>
+  				<p></p>
+  				<p id="jobID" class="ui large" th:if="${jobs != null}" th:text="${jobs.jobId}" style="display: none">Error message if exists</p>	
+			</table>						
+			</div>	
+			
+		</div>
+         
+    </div>
+    
+<script src="/script/apply.js"></script>
+<script src="/script/admin.js"></script>
+<script src="/script/homepage.js"></script>
+<script src="/script/login.js"></script>
+<script src="/script/topFrameOperations.js"></script>
+</body>
+</html>

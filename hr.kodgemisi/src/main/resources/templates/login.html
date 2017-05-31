@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8"/>
+<title>Login</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+	<link href="css/index.css" rel="stylesheet"></link>
+	<link href="css/login.css" rel="stylesheet"></link>
+    <script src="script/jquery-3.2.1.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+</head>
+
+<body style ="background: white;">
+<div>
+    <div class="container">
+        <div class="topFrame">
+
+                <!--Kod gemisi Logo-->
+                <div id="logoFrame">
+                    <img id="main-logo" class="image" th:src="@{image/kodgemisi.png}"/>
+                </div>
+                 <div id="myDropdown" class="dropdown-content">
+                    <a id="adminPage" style="display:none" href="#">Admin Page</a>             
+                    <a id="signOut"  style="display:none" href="#">Log Out</a>
+                    <a id="loginArea"  href="#">Log In</a>
+               	 </div>
+               </div>
+
+                
+            </div>
+
+      <form action="/j_spring_security_check" style="margin:auto;" method="POST">
+        <label for="username">User Name:</label>
+        <input id="username" name="j_username" type="text"/>
+        <label for="password">Password:</label>
+        <input id="password" name="j_password" type="password"/>
+        <button id="login" type="button">Login</button>
+      </form>
+    </div>
+<script src="script/login.js"></script>
+<script src="script/topFrameOperations.js"></script>
+</body>
+</html>

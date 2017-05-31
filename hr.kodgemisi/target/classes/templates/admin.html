@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8"/>
+<title>Admin Page</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+	<link href="css/index.css" rel="stylesheet"></link>
+	<link href="css/login.css" rel="stylesheet"></link>
+    <script src="script/jquery-3.2.1.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+    <style >
+    table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+table {
+    border-collapse: collapse;
+    width: 25%;
+}
+th, td {
+    padding: 15px;
+}
+    </style>
+         
+</head>
+
+
+<body style ="background: white;">
+<div>
+    <div class="container">
+        <div class="topFrame">
+
+                <!--Kod gemisi Logo-->
+                <div id="logoFrame">
+                    <img id="main-logo" class="image" th:src="@{image/kodgemisi.png}"/>
+                </div>
+
+                <!--User Logo-->
+                <div id="logoFrame" class="dropdown" style="float: right;">
+                        <img id="user-logo" class="dropbtn image" th:src="@{image/user.png}"/>   
+                        <span id="username">Hello User</span>                                                         
+                 <div id="myDropdown" class="dropdown-content">
+                    <a id="adminPage" style="display:none" href="#">Admin Page</a>             
+                    <a id="signOut"  style="display:none" href="#">Log Out</a>
+                    <a id="loginArea"  href="#">Log In</a>
+               	 </div>
+               	 </div>
+               </div>                
+            </div>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/homepage">Home Page</a>
+                    </li>
+                </ul>
+            </div>
+            
+       <div style="width: 1200px">
+       
+       		<div id="listJob" style="float:left; width: 300px;">
+       		
+				<div th:if="${jobs?.isEmpty()}" class="alert alert-danger" role="alert">
+					<strong>Warning! </strong>There is no job to list
+				</div>
+				
+				<table th:each="job : ${jobs}">				 
+				  <tr id="id">                   
+    				<td><span class="badge badge-pill badge-success">ID</span></td>
+    				<td th:text="${job.jobId}"></td>
+    				<td><a th:href="@{/admin/job/{jobID}/appliers(jobID=${job.jobId})}">
+    				<button id="detailId" class="btn btn-primary">Show People Appling</button></a></td>  
+  				</tr>
+  				
+ 				 <tr id="JobTitle">
+    				<td><span class="badge badge-pill badge-success">Job Title</span></td>
+    				<td th:text="${job.jobTitle}"></td>    				
+ 				</tr>
+  				<tr id="jobDescription">
+    				<td> <span class="badge badge-pill badge-success">Job Description</span> </td>
+    				<td th:text="${job.jobDescription}"></td>    				
+  				</tr>
+  				
+  				<tr id="numberOfPersonToHire">
+    				<td> <span class="badge badge-pill badge-success">Number Of Staff Vacancy </span> </td>
+    				<td th:text="${job.numberOfPersonToHire}"></td>    				
+  				</tr>
+  				<tr id="lastApplicationDate">
+    				<td> <span class="badge badge-pill badge-success">Last Date</span> </td>
+    				<td th:text="${job.lastApplicationDate}"></td>
+    				<td><a th:href="@{/admin/{id}/delete(id=${job.jobId})}">
+    				<button id="deleteJobId" class="btn btn-danger">Delete Job</button></a></td>   				    				
+   				</tr>
+  				<p></p>
+  				<p></p>	
+			</table>						
+			</div>
+       			
+       		</div>
+       		
+       		
+       		<div style="float: right; width: 600px;">
+       		<h2 style="margin-left: 200px;">Create Job</h2>
+       			<form action="/j_spring_security_check" style="margin:auto; width: 550px; height: 450px;" method="POST">
+        			<label for="jobTitle">Job Title:</label>
+        			<input id="jobTitle" name="jobTitle" type="text"/>
+        			<label for="jobDesc">Job Description:</label>
+        			<input id="jobDesc" name="jobDesc" type="text"/>
+        			<label for="numOfHired">Number Of People to Hire:</label>
+        			<input id="numOfHired" name="numOfHired" type="number"/>
+        			<label for="lastDate">Last Application Date:</label>
+		    			
+        			
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <select id="selectMonthDate" class="form-control col-sm-2" name="expiry-month">
+                        <option>Month</option>
+                        <option value="01">Jan (01)</option>
+                        <option value="02">Feb (02)</option>
+                        <option value="03">Mar (03)</option>
+                        <option value="04">Apr (04)</option>
+                        <option value="05">May (05)</option>
+                        <option value="06">June (06)</option>
+                        <option value="07">July (07)</option>
+                        <option value="08">Aug (08)</option>
+                        <option value="09">Sep (09)</option>
+                        <option value="10">Oct (10)</option>
+                        <option value="11">Nov (11)</option>
+                        <option value="12">Dec (12)</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-3">
+                      <select id="selectYearDate" class="form-control" name="expiry-year">                        
+                        <option value="17">2017</option>
+                        <option value="18">2018</option>
+                        <option value="19">2019</option>
+                        <option value="20">2020</option>
+                        <option value="21">2021</option>
+                        <option value="22">2022</option>
+                        <option value="23">2023</option>
+                        <option value="13">2024</option>
+                        <option value="14">2025</option>
+                        <option value="15">2026</option>
+                        <option value="16">2027</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+			<div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <button id="createButton" type="button" class="btn btn-success">Create Job</button>
+                </div>
+            </div>
+      		</form>	
+		</div>
+ </div>
+<script src="script/admin.js"></script>
+<script src="script/homepage.js"></script>
+<script src="script/login.js"></script>
+<script src="script/topFrameOperations.js"></script>
+</body>
+</html>

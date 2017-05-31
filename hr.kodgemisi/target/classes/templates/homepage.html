@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="UTF-8"/>
+<title>Home Page</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+	<link href="css/index.css" rel="stylesheet"></link>
+	<link href="css/login.css" rel="stylesheet"></link>
+    <script src="script/jquery-3.2.1.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+        <style >
+    table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+table {
+    border-collapse: collapse;
+    width: 25%;
+}
+th, td {
+    padding: 15px;
+}
+    </style>
+    
+</head>
+
+<body style ="background: white;">
+<div>
+    <div class="container">
+        <div class="topFrame">
+
+                <!--Kod gemisi Logo-->
+                <div id="logoFrame">
+                    <img id="main-logo" class="image" th:src="@{image/kodgemisi.png}"/>
+                </div>
+
+                <!--User Logo-->
+                <div id="logoFrame" class="dropdown" style="float: right;">
+                        <img id="user-logo" class="dropbtn image" th:src="@{image/user.png}"/>   
+                        <span id="username">Hello User</span>                                                         
+                 <div id="myDropdown" class="dropdown-content">
+                    <a id="adminPage" style="display:none" href="#">Admin Page</a>             
+                    <a id="signOut" style="display:none" >Log Out</a>
+                    <a id="loginArea"  href="#">Log In</a>
+               	 </div>
+               	 </div>
+               </div>                             
+            </div>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/homepage">Home Page</a>
+                    </li>
+                </ul>
+            </div>
+            
+         <div style="width: 1200px">    
+            <div id="listJob" style="float:left; width: 300px;">
+       		
+				<div th:if="${jobs?.isEmpty()}" class="alert alert-danger" role="alert">
+					<strong>Warning! </strong>There is no job to list
+				</div>
+				
+				
+				
+				<table th:each="job : ${jobs}">				 
+				  <tr id="id">                   
+    				<td><span class="badge badge-pill badge-success">ID</span></td>
+    				<td th:text="${job.jobId}"></td>
+  				</tr>
+  				
+ 				 <tr id="JobTitle">
+    				<td><span class="badge badge-pill badge-success">Job Title</span></td>
+    				<td th:text="${job.jobTitle}"></td>    				
+ 				</tr>
+  				<tr id="jobDescription">
+    				<td> <span class="badge badge-pill badge-success">Job Description</span> </td>
+    				<td th:text="${job.jobDescription}"></td>    				
+  				</tr>
+  				
+  				<tr id="numberOfPersonToHire">
+    				<td> <span class="badge badge-pill badge-success">Number Of Staff Vacancy </span> </td>
+    				<td th:text="${job.numberOfPersonToHire}"></td>   			  				
+    				    				
+  				</tr>
+  				<tr id="lastApplicationDate">
+    				<td> <span class="badge badge-pill badge-success">Last Date</span> </td>
+    				<td th:text="${job.lastApplicationDate}"></td>    				
+    				<td th:href="@{/admin/{jobID}/delete(jobID=${job.jobId})}">
+    				<button id="applyButton" class="btn btn-danger">Apply</button></td>
+    				   				    				
+  				</tr>
+  				
+  				<p></p>
+  				<p></p>
+  				<p id="jobID" class="ui large" th:if="${job != null}" th:text="${job.jobId}" style="display: none">Error message if exists</p>	
+			</table>						
+			</div>
+			
+       		<div id="applyDiv" style="float: right; width: 600px; display:none;">
+       		<h2 style="margin-left: 200px;">Apply to Job</h2>
+       			<form action="/j_spring_security_check" style="margin:auto; width: 550px; height: 650px;" method="POST">
+        			<label for="name">Name:</label>
+        			<input id="name" name="name" type="text"/>
+        			<label for="surname">Surname:</label>
+        			<input id="surname" name="surname" type="text"/>
+        			<label for="E-mail">E-Mail:</label>
+        			<input id="email" name="email" type="email"/>
+        			<label for="phone">Phone:</label>
+        			<input id="phone" name="phone" type="number"/>
+					<label for="address">Address:</label>
+        			<input id="address" name="address" type="text"/>
+        			<label for="thoughts">Thoughts:</label>
+        			<input id="thoughts" name="thoughts" type="text"/>
+ 
+			<div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <button id="applyJob" type="button" class="btn btn-success">Apply</button>
+                </div>
+            </div>
+      		</form>	
+		</div>			
+			
+		</div>
+    </div>
+    
+<script src="script/apply.js"></script>
+<script src="script/admin.js"></script>
+<script src="script/homepage.js"></script>
+<script src="script/login.js"></script>
+<script src="script/topFrameOperations.js"></script>
+</body>
+</html>
